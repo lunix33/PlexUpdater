@@ -6,8 +6,8 @@ const http = require('https'),
 	  cprocess = require('child_process');
 
 const build = process.env['PU_PLEX_BUILD'] || 'Ubuntu 64-bit',
-	  pkgmanager = process.env['PU_PKG_MANAGER_PATH'] || '/usr/bin/dpkg',
-	  pkgmanagerargs = process.env['PU_PKG_MANAGER_ARGS'] || '-i {pkg}',
+	  pkgmanager = process.env['PU_PKG_MNG_PATH'] || '/usr/bin/dpkg',
+	  pkgmanagerargs = process.env['PU_PKG_MNG_ARGS'] || '-i {pkg}',
       location = `.computer.Linux.releases.find(x => x.label.indexOf('${build}') > -1 ).url`,
 	  filename = 'plex-install.deb';
 function main() {

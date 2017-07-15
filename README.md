@@ -3,7 +3,9 @@
 This small tool aim to automate the update of PLEX Media Server using the public distribution.
 This tool needs to be run manually and don't have any CLI arguments, but do use environnement variables.
 
-**NOTE: This tool is aimed for linux.**
+**NOTES**: 
+* This tool is aimed for linux.
+* This tool need to be executed as root since it doesn't just download the package, but also install it.
 
 ## Environnement variables
 
@@ -17,13 +19,13 @@ This tool needs to be run manually and don't have any CLI arguments, but do use 
 >
 > Default: `Ubuntu 64-bit`
 
-*PU_PKG_MANAGER_PATH* :
+*PU_PKG_MNG_PATH* :
 
 > Path to the distribution package manager.
 >
 > Default: `/usr/bin/dpkg`
 
-*PU_PKG_MANAGER_ARGS* :
+*PU_PKG_MNG_ARGS* :
 
 > The installation arguments of the package manager.
 >
