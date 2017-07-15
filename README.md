@@ -8,11 +8,15 @@ This tool needs to be run manually and don't have any CLI arguments, but do use 
 *PLEX_BUILD* :
 
 > Specify the build to be downloaded, by default it is: 'linux-ubuntu-x86_64'.
-> To see all the build available see: [https://run.plnkr.co/LbX7GMSA9QUD5bAE/]()
+>
+> To see all the build available see: https://run.plnkr.co/LbX7GMSA9QUD5bAE/
+>
 > Note: The build and distro must match one of the groups (indicated by the curlies: `{}`).
 
 *PLEX_DISTRO* :
 
 > Specify the build distro to be downloaded, by default it is: 'ubuntu'.
-> To see all the distros available see: [https://run.plnkr.co/LbX7GMSA9QUD5bAE/]()
+>
+> To see all the distros available see: https://run.plnkr.co/LbX7GMSA9QUD5bAE/
+>
 > Note: The build and distro must match one of the groups (indicated by the curlies: `{}`).
