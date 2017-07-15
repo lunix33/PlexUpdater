@@ -2,10 +2,13 @@
 
 const http = require('https'),
       process = require('process'),
-	  fs = require('fs');
+	  fs = require('fs'),
+	  cprocess = require('child_process');
 
-const build = process.env['PLEX_BUILD'] | 'linux-ubuntu-x86_64',
-      distro = process.env['PLEX_DISTRO'] | 'ubuntu',
+const build = process.env['PU_PLEX_BUILD'] || 'linux-ubuntu-x86_64',
+      distro = process.env['PU_PLEX_DISTRO'] || 'ubuntu',
+	  pkgmanager = process.env['PU_PKG_MANAGER_PATH'] || '/usr/bin/dpkg',
+	  pkgmanagerargs = process.env['PU_PKG_MANAGER_ARGS'] || '-i {pkg}',
       location = `.computer.Linux.releases.find(x => x.build === '${build}' && x.distro === '${distro}').url`,
 	  filename = 'plex-install.deb';
 function main() {
@@ -13,7 +16,17 @@ function main() {
 		console.log(`Downloading from: ${link}`);
 		downloadFile(link).then(() => {
 			console.log(`File downloaded!`);
-			install();
+			install().then(() => {
+				console.log('Package manager finished correctly.');
+				clean().then(() => {
+					process.exit(0);
+				}).catch((err) => {
+					process.exit(4);
+				});
+			}).catch((err) => {
+				console.log(err);
+				process.exit(3);
+			});
 		}).catch((err) => {
 			console.log(err);
 			process.exit(2);
@@ -104,9 +117,49 @@ function downloadFile(link) {
 	});
 }
 
+/**
+ * Install the package.
+ * @returns {Promise} Return a promise which indicate when the package is done installing correctly (done), otherwise return an error message.
+ */
 function install() {
-	const args = ['-i', filename];
+	const errMsg = `Package wasn't installed correctly`;
 	
+	return new Promise((resolve, reject) => {
+		try{
+			const args = pkgmanagerargs.replace('{pkg}', filename).split(' ');
+			const child = cprocess.spawn(pkgmanager, args);
+
+			child.stdout.on('data', (data) => {
+				console.log(`pkg-mng: ${data}`);
+			});
+
+			child.stderr.on('data', (data) => {
+				console.log('\x1b[31m%s\x1b[0m', `pkg-mng: ${data}`);
+			});
+
+			child.on('close', (code) => {
+				if (code === 0)
+					resolve();
+				else
+					reject(`${errMsg}: The package manager finished with code ${code}`);
+			});
+		} catch (e) {
+			reject(`${errMsg}: The package manager could not start.`);
+		}
+	});
+}
+
+function clean() {
+	const errMsg = 'Unable to complete the cleaning operation';
+	
+	return new Promise((resolve, reject) => {
+		fs.unlink(filename, (err) => {
+			if (err)
+				reject(`${errMsg}: Unable to delete the installation file.`);
+			
+			resolve();
+		});
+	});
 }
 
 main();
