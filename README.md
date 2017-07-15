@@ -11,13 +11,11 @@ This tool needs to be run manually and don't have any CLI arguments, but do use 
 
 > Specify the build to be downloaded.
 >
-> Default: `linux-ubuntu-x86_64`
-
-*PU_PLEX_DISTRO* :
-
-> Specify the distro at which the build is aimed.
+> The value must be copied exactly (without the quotes), but must only contain the information needed to identify the version.
+> By exemple, if we have the two following build: `Fedora 64-bit (RPM for Fedora 14 or newer)` and `Fedora 32-bit (RPM for Fedora 14 or newer)`, only `Fedora XX-bit` is required.
+> To see the list of build see: [PLEX MS Build Reference].
 >
-> Default: `ubuntu`
+> Default: `Ubuntu 64-bit`
 
 *PU_PKG_MANAGER_PATH* :
 
@@ -33,8 +31,4 @@ This tool needs to be run manually and don't have any CLI arguments, but do use 
 >
 > Default: `-i {pkg}`
 
-To see all the build and distro available see: [PLEX MS Distro/Build Reference]
-
-*Note*: The build and distro must match one of the groups (indicated by the curlies: `{}`).
-
-[PLEX MS Distro/Build Reference]: https://embed.plnkr.co/YzvbGositrtuwAc2Q3nI/?show=preview
+[PLEX MS Build Reference]: https://embed.plnkr.co/YzvbGositrtuwAc2Q3nI/?show=preview
