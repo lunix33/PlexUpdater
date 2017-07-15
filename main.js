@@ -5,7 +5,8 @@ const http = require('https'),
 	  fs = require('fs');
 
 const build = process.env['PLEX_BUILD'] | 'linux-ubuntu-x86_64',
-      location = `.computer.Linux.releases.find(x => x.build === '${build}').url`,
+      distro = process.env['PLEX_DISTRO'] | 'ubuntu',
+      location = `.computer.Linux.releases.find(x => x.build === '${build}' && x.distro === '${distro}').url`,
 	  filename = 'plex-install.deb';
 function main() {
 	getLink().then((link) => {
@@ -13,7 +14,7 @@ function main() {
 		downloadFile(link).then(() => {
 			console.log(`File downloaded!`);
 			install();
-		}).catch(() => {
+		}).catch((err) => {
 			console.log(err);
 			process.exit(2);
 		});
@@ -105,6 +106,7 @@ function downloadFile(link) {
 
 function install() {
 	const args = ['-i', filename];
+	
 }
 
 main();
