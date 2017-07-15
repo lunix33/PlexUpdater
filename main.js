@@ -5,11 +5,10 @@ const http = require('https'),
 	  fs = require('fs'),
 	  cprocess = require('child_process');
 
-const build = process.env['PU_PLEX_BUILD'] || 'linux-ubuntu-x86_64',
-      distro = process.env['PU_PLEX_DISTRO'] || 'ubuntu',
+const build = process.env['PU_PLEX_BUILD'] || 'Ubuntu 64-bit',
 	  pkgmanager = process.env['PU_PKG_MANAGER_PATH'] || '/usr/bin/dpkg',
 	  pkgmanagerargs = process.env['PU_PKG_MANAGER_ARGS'] || '-i {pkg}',
-      location = `.computer.Linux.releases.find(x => x.build === '${build}' && x.distro === '${distro}').url`,
+      location = `.computer.Linux.releases.find(x => x.label.indexOf('${build}') > -1 ).url`,
 	  filename = 'plex-install.deb';
 function main() {
 	getLink().then((link) => {
