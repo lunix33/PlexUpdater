@@ -18,8 +18,10 @@ function main() {
 			install().then(() => {
 				console.log('Package manager finished correctly.');
 				clean().then(() => {
+					console.log('========== DONE ! ==========')
 					process.exit(0);
 				}).catch((err) => {
+					console.log(err);
 					process.exit(4);
 				});
 			}).catch((err) => {
