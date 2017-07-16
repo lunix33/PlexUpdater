@@ -10,6 +10,11 @@ const build = process.env['PU_PLEX_BUILD'] || 'Ubuntu 64-bit',
 	  pkgmanagerargs = process.env['PU_PKG_MNG_ARGS'] || '-i {pkg}',
       location = `.computer.Linux.releases.find(x => x.label.indexOf('${build}') > -1 ).url`,
 	  filename = 'plex-install.deb';
+
+/**
+ * Application main entry point.
+ * @returns {undefined}
+ */
 function main() {
 	getLink().then((link) => {
 		console.log(`Downloading from: ${link}`);
@@ -18,7 +23,7 @@ function main() {
 			install().then(() => {
 				console.log('Package manager finished correctly.');
 				clean().then(() => {
-					console.log('========== DONE ! ==========')
+					console.log('========== DONE ! ==========');
 					process.exit(0);
 				}).catch((err) => {
 					console.log(err);
@@ -40,7 +45,7 @@ function main() {
 
 /**
  * Get the download link of the installation file.
- * @returns {Promise} A promise which return the download link (then) or an error message (catch)
+ * @returns {Promise} A promise which return the download link (then), otherwise return an error message (catch)
  */
 function getLink() {
 	const errMsg = 'Unable to get download URL';
@@ -79,7 +84,7 @@ function getLink() {
 /**
  * Download the installation file into the system.
  * @param   {string}  link The download URL.
- * @returns {Promise}      A promise which return when the file is done downloading (then), or an error message (catch)
+ * @returns {Promise}      A promise which return when the file is done downloading (then), otherwise return an error message (catch)
  */
 function downloadFile(link) {
 	const errMsg = 'Unable to download installation file';
@@ -120,7 +125,7 @@ function downloadFile(link) {
 
 /**
  * Install the package.
- * @returns {Promise} Return a promise which indicate when the package is done installing correctly (done), otherwise return an error message.
+ * @returns {Promise} Return a promise which indicate when the package is done installing correctly (then), otherwise return an error message (catch).
  */
 function install() {
 	const errMsg = `Package wasn't installed correctly`;
@@ -150,6 +155,10 @@ function install() {
 	});
 }
 
+/**
+ * Remove the temporary installation file.
+ * @returns {Promise} Return a promise which indicate when the cleaning process is finish (then), otherwise return an error message (catch).
+ */
 function clean() {
 	const errMsg = 'Unable to complete the cleaning operation';
 	
